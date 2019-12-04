@@ -1,0 +1,27 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "AutoShot", menuName = "Command/Attacking/AutoShot")]
+public class AutoShot : AttackCommand
+{
+    public override void Equip()
+    {
+        InstancedAction.RegisterUpdate(ShotBullet);
+    }
+
+    public override void Unequip()
+    {
+        InstancedAction.UnRegisterUpdate(ShotBullet);
+    }
+
+    public void ShotBullet()
+    {
+        Do();
+        foreach(var g in Player.instance.guns)
+        {
+            g.Shot();
+        }
+        End();
+    }
+}
