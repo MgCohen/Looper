@@ -16,12 +16,6 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         setter.Set();
-        guns.Clear();
-        var equippedGuns = GetComponentsInChildren<Gun>();
-        foreach (var g in equippedGuns)
-        {
-            guns.Add(g);
-        }
     }
 
     [Header("Locks")]
@@ -31,7 +25,9 @@ public class Player : MonoBehaviour
 
     [Header("Values")]
     public int hp;
-    public int stamina;
+    public int maxHp;
+    public float stamina;
+    public float maxStamina;
 
     public bool needTarget
     {
@@ -51,7 +47,8 @@ public class Player : MonoBehaviour
     [Header("References")]
 
     public List<Gun> guns = new List<Gun>();
-    public PlayerControl control;
+    public PlayerInput control;
+    public Rigidbody2D body;
     public PlayerSetter setter;
     [HideInInspector] public List<Command> commands = new List<Command>();
     [HideInInspector] public List<Mods> mods = new List<Mods>();
@@ -80,10 +77,6 @@ public class Player : MonoBehaviour
             {
                 (command as TargetCommand).OnDo.AddListener((mod as TargetMod).OnTarget);
                 (command as TargetCommand).OnEnd.AddListener((mod as TargetMod).OnChangeTarget);
-            }
-            else if (mod.targetType == CommandType.Other)
-            {
-                //(command as AttackCommand).OnDo.AddListener((mod as AttackMod).OnAttack);
             }
         }
     }
@@ -142,16 +135,25 @@ public class Player : MonoBehaviour
             AddCommand(c);
         }
     }
-    public void AddGun()
+    public void AddGun(GunData gun)
     {
-
+        var gunBase = Instantiate(Resources.Load("Gun") as GameObject, transform).GetComponent<Gun>();
+        gunBase.gun = gun;
+        gunBase.SetGun();
+        foreach (var m in gun.defaultMods)
+        {
+            AddMod(m);
+        }
+        guns.Add(gunBase);
     }
-    public void RemoveGun()
+    public void RemoveGun(Gun gun)
     {
-
+        guns.Remove(gun);
+        foreach (var m in gun.gun.defaultMods)
+        {
+            RemoveMod(m);
+        }
     }
-
-
     public void SetTarget(Transform target, Gun selectedGun = null)
     {
         if (selectedGun == null)
@@ -175,5 +177,43 @@ public class Player : MonoBehaviour
         guns.Remove(selectedGun);
         selectedGun.SetTarget(target);
         guns.Add(selectedGun);
+    }
+    public void SetSpeed(Vector2 speed)
+    {
+        if(!Ready || Locked)
+        {
+            return;
+        }
+        var currentX = body.velocity.x;
+        var currentY = body.velocity.y;
+        var newX = speed.x;
+        var newY = speed.y;
+        if ((currentX >= 0 && newX >= 0) || (currentX <= 0 && newX <= 0))
+        {
+            currentX = (Mathf.Abs(currentX) > Mathf.Abs(newX)) ? currentX : newX;
+        }
+        else
+        {
+            currentX = currentX + newX;
+        }
+
+        if ((currentY >= 0 && newY >= 0) || (currentY <= 0 && newY <= 0))
+        {
+            currentY = (Mathf.Abs(currentY) > Mathf.Abs(newY)) ? currentY : newY;
+        }
+        else
+        {
+            currentY = currentY + newY;
+        }
+        body.velocity = new Vector2(currentX, currentY);
+    }
+    public void ForceSpeed(Vector2 speed)
+    {
+        body.velocity = speed;
+    }
+
+    public void TakeDamage()
+    {
+
     }
 }

@@ -6,11 +6,18 @@ using UnityEngine;
 public class Dash : MoveCommand
 {
     public float speed;
+    public float staminaCost;
     public override void Swipe(Vector2 direction, Vector2 start, Vector2 finish)
     {
+        if(staminaCost > Player.instance.stamina)
+        {
+            return;
+        }
+        Player.instance.stamina -= staminaCost;
         Do();
-        var player = Player.instance;
-        player.transform.position += (Vector3)direction * speed;
-        End();
+        var body = Player.instance.body;
+        body.AddForce(direction * speed, ForceMode2D.Impulse);
+        InstancedAction.DelayAction(End, 0.25f);
     }
+
 }

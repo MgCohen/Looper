@@ -18,6 +18,12 @@ public class Gun : MonoBehaviour
 
     private void OnEnable()
     {
+        SetGun();
+    }
+
+    public void SetGun()
+    {
+        player = Player.instance;
         sprite.sprite = gun.weaponSprite;
     }
 

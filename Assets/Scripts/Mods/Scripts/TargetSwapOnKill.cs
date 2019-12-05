@@ -15,7 +15,6 @@ public class TargetSwapOnKill : BulletMod
 
     public void Switch()
     {
-        Debug.Log(5);
         Gun gun = null;
         foreach(var g in Player.instance.guns)
         {

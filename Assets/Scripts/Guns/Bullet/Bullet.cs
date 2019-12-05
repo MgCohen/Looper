@@ -8,7 +8,10 @@ public class Bullet : MonoBehaviour
     public int damage;
     [HideInInspector] public IDamageable hitted;
     bool dead = false;
-    
+
+    public GameObject spawnParticle;
+    public GameObject hitParticle;
+
     private void OnEnable()
     {
         Invoke("Die", 1f);

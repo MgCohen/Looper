@@ -4,7 +4,7 @@ using UnityEngine;
 using Lean.Touch;
 
 
-public class PlayerControl : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
 
     Player player;

@@ -24,4 +24,6 @@ public class GunData : ScriptableObject
     public float shotCD;
     public float bulletsPerShot;
 
+    public List<Mods> defaultMods = new List<Mods>();
+
 }

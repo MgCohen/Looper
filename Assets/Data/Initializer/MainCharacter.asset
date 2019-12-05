@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acce07ee57fe91045ad1d5f6f12ae3d1, type: 3}
-  m_Name: Setter
+  m_Name: MainCharacter
   m_EditorClassIdentifier: 
   commands:
   - {fileID: 11400000, guid: 57d92ad1ac6cdb442ba5723665a84238, type: 2}
@@ -19,3 +19,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b16dcf4316043ca4a840c323e46926b4, type: 2}
   mods:
   - {fileID: 11400000, guid: aa80c39bb473e3a46801714bcf7bb501, type: 2}
+  - {fileID: 11400000, guid: 95350d380e4ca724f9e5c9391881f346, type: 2}
+  - {fileID: 11400000, guid: 994dcdbb2be43d048a825d6fca2b0af1, type: 2}
+  startingGuns:
+  - {fileID: 11400000, guid: 4122674748303e246ab73005121230e9, type: 2}
+  - {fileID: 11400000, guid: 4122674748303e246ab73005121230e9, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37def851f59c75a4e8ad45499d667caf, type: 3}
   m_Name: AutoShot
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   OnDo:
     m_PersistentCalls:
       m_Calls: []

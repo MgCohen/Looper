@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07135dbbe22157645832acdf93110cb3, type: 3}
-  m_Name: Tap
+  m_Script: {fileID: 11500000, guid: e130416a4d43a9b478d4987327e47517, type: 3}
+  m_Name: Run Away
   m_EditorClassIdentifier: 
-  type: 1
-  OnDo:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  targetRange: 1
+  targetType: 4
+  speed: 2
+  range: 3

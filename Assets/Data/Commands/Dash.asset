@@ -19,4 +19,5 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
-  speed: 3
+  speed: 50
+  staminaCost: 25
