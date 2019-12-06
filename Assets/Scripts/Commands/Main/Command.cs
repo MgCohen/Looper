@@ -8,10 +8,6 @@ public class Command : ScriptableObject
 {
     public CommandType type;
 
-    [HideInInspector]
-    public UnityEvent OnDo = new UnityEvent();
-    [HideInInspector]
-    public UnityEvent OnEnd = new UnityEvent();
 
     public virtual void Tap(Vector2 point)
     {
@@ -33,13 +29,8 @@ public class Command : ScriptableObject
     {
 
     }
-    public void Do()
+    public virtual void ClearListeners()
     {
-        OnDo.Invoke();
-    }
-    public void End()
-    {
-        OnEnd.Invoke();
-    }
 
+    }
 }

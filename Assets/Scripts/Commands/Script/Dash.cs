@@ -9,15 +9,15 @@ public class Dash : MoveCommand
     public float staminaCost;
     public override void Swipe(Vector2 direction, Vector2 start, Vector2 finish)
     {
-        if(staminaCost > Player.instance.stamina)
+        if (staminaCost > Player.instance.stamina)
         {
             return;
         }
         Player.instance.stamina -= staminaCost;
-        Do();
+        Move(Player.instance.transform.position);
         var body = Player.instance.body;
         body.AddForce(direction * speed, ForceMode2D.Impulse);
-        InstancedAction.DelayAction(End, 0.25f);
+        InstancedAction.DelayAction(() => { EndMove(Player.instance.transform.position); }, 0.25f);
     }
 
 }

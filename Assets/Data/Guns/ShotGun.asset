@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81536bc8795eb0a4492c2381710f86aa, type: 3}
-  m_Name: Standard Gun
+  m_Name: ShotGun
   m_EditorClassIdentifier: 
   type: 0
   weaponSprite: {fileID: 21300010, guid: f2774c896b94b304f8e7c99b5ab22296, type: 3}
@@ -19,8 +19,8 @@ MonoBehaviour:
   muzzleFlash: {fileID: 0}
   minRange: 0
   maxRange: 10
-  spread: 8
-  speedVariance: 0.1
-  shotCD: 0.13
-  bulletsPerShot: 1
+  spread: 35
+  speedVariance: 0.25
+  shotCD: 0.5
+  bulletsPerShot: 10
   defaultMods: []

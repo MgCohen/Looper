@@ -5,11 +5,11 @@ using UnityEngine;
 public class MoveMod : Mods
 {
 
-    public virtual void OnMove()
+    public virtual void OnMove(Vector2 from)
     {
     }
 
-    public virtual void OnEndMove()
+    public virtual void OnEndMove(Vector2 to)
     {
 
     }

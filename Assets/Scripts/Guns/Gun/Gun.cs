@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class Gun : MonoBehaviour
 {
     [Header("References")]
@@ -40,19 +40,25 @@ public class Gun : MonoBehaviour
         foreach (var c in player.commands)
         {
             if (c.type == CommandType.Attacking)
-                c.Do();
+                (c as AttackCommand).Shot(this);
         }
+        Camera.main.DOShakePosition(0.05f, 0.05f);
         if (gun.type == ShotType.Projectile)
         {
             for (int i = 0; i < gun.bulletsPerShot; i++)
             {
                 var speedVariance = Random.Range(1 - (gun.speedVariance/2), 1 + (gun.speedVariance / 2));
                 var rotation = transform.rotation.eulerAngles;
-                var variance = Random.Range(-gun.accuracy/2, gun.accuracy/2);
+                var variance = Random.Range(-gun.spread/2, gun.spread/2);
                 rotation.z += variance;
                 var obj = Lean.Pool.LeanPool.Spawn(gun.bullet, gunPoint.position, Quaternion.Euler(new Vector3(0, 0, rotation.z)));
                 obj.GetComponent<Bullet>().speed *= speedVariance;
             }
+        }
+        foreach (var c in player.commands)
+        {
+            if (c.type == CommandType.Attacking)
+                (c as AttackCommand).AfterShot(this);
         }
         recharge = 0;
     }

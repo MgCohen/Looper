@@ -13,11 +13,12 @@ public class GunData : ScriptableObject
     public Sprite aimSprite;
 
     public GameObject bullet;
+    public GameEvent muzzleFlash;
 
     public float minRange;
     public float maxRange;
     [Range(0f, 360f)]
-    public float accuracy;
+    public float spread;
     [Range(0f, 1f)]
     public float speedVariance;
 

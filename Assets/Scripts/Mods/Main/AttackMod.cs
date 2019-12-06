@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class AttackMod : Mods
 {
-    public virtual void OnShot()
+    public virtual void OnShot(Gun usedGun)
     {
 
     }
 
-    public virtual void AfterShot()
+    public virtual void AfterShot(Gun usedGun)
     {
 
     }

@@ -5,15 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Yell", menuName = "Mods/Move/Yell")]
 public class Yell : MoveMod
 {
-    public override void OnMove()
+    public override void OnMove(Vector2 point)
     {
-        base.OnMove();
         Debug.Log("Moving");
     }
 
-    public override void OnEndMove()
+    public override void OnEndMove(Vector2 point)
     {
-        base.OnEndMove();
         Debug.Log("Moved");
     }
 }

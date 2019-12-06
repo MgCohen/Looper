@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TargetMod : Mods
 {
-    public virtual void OnTarget()
+    public virtual void OnTarget(Transform target)
     {
 
     }
 
-    public virtual void OnChangeTarget()
+    public virtual void OnChangeTarget(Transform oldTarget)
     {
 
     }

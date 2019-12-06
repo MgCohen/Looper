@@ -65,18 +65,24 @@ public class Player : MonoBehaviour
             }
             if (mod.targetType == CommandType.Attacking)
             {
-                (command as AttackCommand).OnDo.AddListener((mod as AttackMod).OnShot);
-                (command as AttackCommand).OnEnd.AddListener((mod as AttackMod).AfterShot);
+                //(command as AttackCommand).OnDo.AddListener((mod as AttackMod).OnShot);
+                //(command as AttackCommand).OnEnd.AddListener((mod as AttackMod).AfterShot);
+                (command as AttackCommand).OnAttack.AddListener((mod as AttackMod).OnShot);
+                (command as AttackCommand).OnEndAttack.AddListener((mod as AttackMod).AfterShot);
             }
             else if (mod.targetType == CommandType.Movement)
             {
-                (command as MoveCommand).OnDo.AddListener((mod as MoveMod).OnMove);
-                (command as MoveCommand).OnEnd.AddListener((mod as MoveMod).OnEndMove);
+                //(command as MoveCommand).OnDo.AddListener((mod as MoveMod).OnMove);
+                //(command as MoveCommand).OnEnd.AddListener((mod as MoveMod).OnEndMove);
+                (command as MoveCommand).OnMove.AddListener((mod as MoveMod).OnMove);
+                (command as MoveCommand).OnEndMove.AddListener((mod as MoveMod).OnEndMove);
             }
             else if (mod.targetType == CommandType.Targetting)
             {
-                (command as TargetCommand).OnDo.AddListener((mod as TargetMod).OnTarget);
-                (command as TargetCommand).OnEnd.AddListener((mod as TargetMod).OnChangeTarget);
+                //(command as TargetCommand).OnDo.AddListener((mod as TargetMod).OnTarget);
+                (command as TargetCommand).OnSetTarget.AddListener((mod as TargetMod).OnTarget);
+                (command as TargetCommand).OnChangeTarget.AddListener((mod as TargetMod).OnChangeTarget);
+                //(command as TargetCommand).OnEnd.AddListener((mod as TargetMod).OnChangeTarget);
             }
         }
     }
@@ -86,8 +92,7 @@ public class Player : MonoBehaviour
         mod.Unequip();
         foreach (var command in commands)
         {
-            command.OnDo.RemoveAllListeners();
-            command.OnEnd.RemoveAllListeners();
+            command.ClearListeners();
         }
         var templist = new List<Mods>();
         foreach (var m in mods)
@@ -120,8 +125,7 @@ public class Player : MonoBehaviour
         command.Unequip();
         foreach (var c in commands)
         {
-            c.OnDo.RemoveAllListeners();
-            c.OnEnd.RemoveAllListeners();
+            c.ClearListeners();
         }
         commands.Remove(command);
         var templist = new List<Command>();
@@ -137,8 +141,9 @@ public class Player : MonoBehaviour
     }
     public void AddGun(GunData gun)
     {
+        var gunInstance = Object.Instantiate(gun);
         var gunBase = Instantiate(Resources.Load("Gun") as GameObject, transform).GetComponent<Gun>();
-        gunBase.gun = gun;
+        gunBase.gun = gunInstance;
         gunBase.SetGun();
         foreach (var m in gun.defaultMods)
         {
@@ -180,7 +185,7 @@ public class Player : MonoBehaviour
     }
     public void SetSpeed(Vector2 speed)
     {
-        if(!Ready || Locked)
+        if (!Ready || Locked)
         {
             return;
         }
@@ -207,9 +212,11 @@ public class Player : MonoBehaviour
         }
         body.velocity = new Vector2(currentX, currentY);
     }
-    public void ForceSpeed(Vector2 speed)
+    public void ForceSpeed(Vector2 speed, float duration)
     {
+        Ready = false;
         body.velocity = speed;
+        InstancedAction.DelayAction(() => { Ready = true; }, duration);
     }
 
     public void TakeDamage()

@@ -7,21 +7,19 @@ public class AutoShot : AttackCommand
 {
     public override void Equip()
     {
-        InstancedAction.RegisterUpdate(ShotBullet);
+        InstancedAction.RegisterUpdate(TryShot);
     }
 
     public override void Unequip()
     {
-        InstancedAction.UnRegisterUpdate(ShotBullet);
+        InstancedAction.UnRegisterUpdate(TryShot);
     }
 
-    public void ShotBullet()
+    public void TryShot()
     {
-        Do();
         foreach(var g in Player.instance.guns)
         {
             g.Shot();
         }
-        End();
     }
 }

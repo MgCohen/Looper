@@ -10,12 +10,12 @@ public class TapTarget : TargetCommand
 
     public override void Tap(Vector2 point)
     {
-        Do();
         var mask = LayerMask.GetMask("Enemy");
         var target = TargetSystem.GetClosestTarget(point, targetRange, mask);
         if (target != null)
         {
             Player.instance.SetTarget(target);
+            SetTarget(target);
         }
     }
 
