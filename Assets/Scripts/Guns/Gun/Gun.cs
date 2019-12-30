@@ -33,7 +33,7 @@ public class Gun : MonoBehaviour
         {
             return;
         }
-        if(recharge < gun.shotCD)
+        if (recharge < gun.shotCD)
         {
             return;
         }
@@ -47,9 +47,9 @@ public class Gun : MonoBehaviour
         {
             for (int i = 0; i < gun.bulletsPerShot; i++)
             {
-                var speedVariance = Random.Range(1 - (gun.speedVariance/2), 1 + (gun.speedVariance / 2));
+                var speedVariance = Random.Range(1 - (gun.speedVariance / 2), 1 + (gun.speedVariance / 2));
                 var rotation = transform.rotation.eulerAngles;
-                var variance = Random.Range(-gun.spread/2, gun.spread/2);
+                var variance = Random.Range(-gun.spread / 2, gun.spread / 2);
                 rotation.z += variance;
                 var obj = Lean.Pool.LeanPool.Spawn(gun.bullet, gunPoint.position, Quaternion.Euler(new Vector3(0, 0, rotation.z)));
                 obj.GetComponent<Bullet>().speed *= speedVariance;
@@ -68,7 +68,26 @@ public class Gun : MonoBehaviour
         {
             var point = (target as MonoBehaviour).transform.position;
             var z = Extensions.RotationZ(transform.position, point);
-            transform.localRotation = Quaternion.Euler(new Vector3(0, 0, z));
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, z));
+            if(z < 0)
+            {
+                z = 360 - Mathf.Abs(z);
+            } 
+            else if(z > 360)
+            {
+                z = z - 360;
+            }
+            sprite.flipY = (z < 90 || z > 270) ? false : true;
+
+            //sprite.sortingOrder = (z > 0 && z < 180)? -1: 1;
+            if((target as MonoBehaviour).transform.position.x < player.transform.position.x)
+            {
+                player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
     private void Update()

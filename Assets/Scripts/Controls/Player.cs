@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     public PlayerInput control;
     public Rigidbody2D body;
     public PlayerSetter setter;
+    public SpriteRenderer sprite;
     [HideInInspector] public List<Command> commands = new List<Command>();
     [HideInInspector] public List<Mods> mods = new List<Mods>();
 

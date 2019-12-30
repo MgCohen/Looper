@@ -17,7 +17,7 @@ MonoBehaviour:
   aimSprite: {fileID: 21300000, guid: aaa4652169fa7f34793be218353bb475, type: 3}
   bullet: {fileID: 222871435987441522, guid: 5913e44f88c08f043a31b91d39ed1e0d, type: 3}
   muzzleFlash: {fileID: 0}
-  minRange: 0
+  minRange: 4
   maxRange: 10
   spread: 8
   speedVariance: 0.1

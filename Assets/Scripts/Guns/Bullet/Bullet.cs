@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed;
     public int damage;
+    public float lifeTime;
     [HideInInspector] public IDamageable hitted;
     bool dead = false;
 
@@ -13,7 +14,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("Die", 1f);
+        Invoke("Die", lifeTime);
         TriggerShot();
     }
     public void Update()

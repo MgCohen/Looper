@@ -7,7 +7,6 @@ public class RunAway : PlayerMod
 {
 
     public float speed;
-    public float range;
 
     bool running = false;
 
@@ -36,7 +35,7 @@ public class RunAway : PlayerMod
                 Vector2 point = Player.instance.transform.position;
                 Vector2 targetPoint = target.transform.position;
                 var dist = Vector2.Distance(point, targetPoint);
-                if (dist <= range)
+                if (dist <= g.gun.minRange)
                 {
                     check = true;
                     Run((point - targetPoint).normalized);
@@ -59,7 +58,7 @@ public class RunAway : PlayerMod
                 Vector2 point = Player.instance.transform.position;
                 Vector2 targetPoint = target.transform.position;
                 var dist = Vector2.Distance(point, targetPoint);
-                if (dist <= (range * 0.8f))
+                if (dist <= (g.gun.minRange * 0.8f))
                 {
                     running = true;
                     Run((point - targetPoint).normalized);
