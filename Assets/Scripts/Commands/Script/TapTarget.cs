@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Command/Target/Tap")]
+[CreateAssetMenu(menuName = "Command/Target/Tap Target")]
 public class TapTarget : TargetCommand
 {
 

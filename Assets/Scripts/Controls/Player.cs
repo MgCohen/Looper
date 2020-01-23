@@ -18,10 +18,13 @@ public class Player : MonoBehaviour
         setter.Set();
     }
 
-    [Header("Locks")]
-    public bool Ready;
-    public bool Locked;
-    public bool Invunerable;
+
+    public enum State { Idle, Dashing, Hurting };
+    [Header("States")]
+    public State state;
+    //public bool Ready;
+    //public bool Locked;
+    //public bool Invunerable;
 
     [Header("Values")]
     public int hp;
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D body;
     public PlayerSetter setter;
     public SpriteRenderer sprite;
+    public Animator anim;
     [HideInInspector] public List<Command> commands = new List<Command>();
     [HideInInspector] public List<Mods> mods = new List<Mods>();
 
@@ -66,24 +70,18 @@ public class Player : MonoBehaviour
             }
             if (mod.targetType == CommandType.Attacking)
             {
-                //(command as AttackCommand).OnDo.AddListener((mod as AttackMod).OnShot);
-                //(command as AttackCommand).OnEnd.AddListener((mod as AttackMod).AfterShot);
                 (command as AttackCommand).OnAttack.AddListener((mod as AttackMod).OnShot);
                 (command as AttackCommand).OnEndAttack.AddListener((mod as AttackMod).AfterShot);
             }
             else if (mod.targetType == CommandType.Movement)
             {
-                //(command as MoveCommand).OnDo.AddListener((mod as MoveMod).OnMove);
-                //(command as MoveCommand).OnEnd.AddListener((mod as MoveMod).OnEndMove);
                 (command as MoveCommand).OnMove.AddListener((mod as MoveMod).OnMove);
                 (command as MoveCommand).OnEndMove.AddListener((mod as MoveMod).OnEndMove);
             }
             else if (mod.targetType == CommandType.Targetting)
             {
-                //(command as TargetCommand).OnDo.AddListener((mod as TargetMod).OnTarget);
                 (command as TargetCommand).OnSetTarget.AddListener((mod as TargetMod).OnTarget);
                 (command as TargetCommand).OnChangeTarget.AddListener((mod as TargetMod).OnChangeTarget);
-                //(command as TargetCommand).OnEnd.AddListener((mod as TargetMod).OnChangeTarget);
             }
         }
     }
@@ -142,7 +140,8 @@ public class Player : MonoBehaviour
     }
     public void AddGun(GunData gun)
     {
-        var gunInstance = Object.Instantiate(gun);
+        var gunInstance = gun;
+        if (!gun.testing) gunInstance = Object.Instantiate(gun);
         var gunBase = Instantiate(Resources.Load("Gun") as GameObject, transform).GetComponent<Gun>();
         gunBase.gun = gunInstance;
         gunBase.SetGun();
@@ -160,6 +159,7 @@ public class Player : MonoBehaviour
             RemoveMod(m);
         }
     }
+
     public void SetTarget(Transform target, Gun selectedGun = null)
     {
         if (selectedGun == null)
@@ -184,9 +184,10 @@ public class Player : MonoBehaviour
         selectedGun.SetTarget(target);
         guns.Add(selectedGun);
     }
+
     public void SetSpeed(Vector2 speed)
     {
-        if (!Ready || Locked)
+        if (state != State.Idle)
         {
             return;
         }
@@ -213,15 +214,49 @@ public class Player : MonoBehaviour
         }
         body.velocity = new Vector2(currentX, currentY);
     }
-    public void ForceSpeed(Vector2 speed, float duration)
+
+    TimeDelayer forceTimer;
+    bool speedLocked;
+    public void ForceSpeed(Vector2 speed, float duration, bool withPriority = false, bool isForce = false, float leftOverSpeed = 0)
     {
-        Ready = false;
-        body.velocity = speed;
-        InstancedAction.DelayAction(() => { Ready = true; }, duration);
+        if (!withPriority && speedLocked)
+        {
+            return;
+        }
+        if (forceTimer != null)
+        {
+            forceTimer.Kill();
+        }
+        speedLocked = true;
+        if (isForce)
+        {
+            body.AddForce(speed);
+        }
+        else
+        {
+            body.velocity = speed;
+        }
+        forceTimer = InstancedAction.DelayAction(() =>
+        {
+            speedLocked = false;
+            if (isForce)
+            {
+                body.velocity = Vector2.zero;
+            }
+            else
+            {
+                body.velocity = speed * leftOverSpeed;
+            }
+        }, duration);
     }
 
     public void TakeDamage()
     {
 
+    }
+
+    public void Act(string animationName)
+    {
+        anim.Play(animationName);
     }
 }

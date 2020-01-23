@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: 
   type: 0
-  OnDo:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  speed: 50
-  staminaCost: 25
+  speed: 3000
+  staminaCost: 0
+  duration: 0.25
+  invincibilityFrames: 0
+  forceBased: 1

@@ -13,6 +13,11 @@ public class ThirdShotBuff : AttackMod
 
     public bool LoadBefore = false;
 
+    public override void Equip()
+    {
+        guns = new List<gunCounter>();
+    }
+
     public override void OnShot(Gun gun)
     {
         if (!LoadBefore)

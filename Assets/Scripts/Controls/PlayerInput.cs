@@ -15,6 +15,8 @@ public class PlayerInput : MonoBehaviour
         LeanTouch.OnFingerSwipe += Swipe;
         LeanTouch.OnFingerTap += Tap;
         LeanTouch.OnFingerUp += Hold;
+        LeanTouch.OnFingerOld += Set;
+        //LeanTouch.onfinger
     }
 
     private void OnDisable()
@@ -22,6 +24,7 @@ public class PlayerInput : MonoBehaviour
         LeanTouch.OnFingerSwipe -= Swipe;
         LeanTouch.OnFingerTap -= Tap;
         LeanTouch.OnFingerUp -= Hold;
+        LeanTouch.OnFingerOld -= Set;
     }
 
 
@@ -56,6 +59,19 @@ public class PlayerInput : MonoBehaviour
         foreach (var s in player.commands)
         {
             s.Hold(pos, time);
+        }
+    }
+
+    public void Set(LeanFinger finger)
+    {
+        if (!finger.Old)
+        {
+            return;
+        }
+        var pos = finger.GetLastWorldPosition(0);
+        foreach(var s in player.commands)
+        {
+            s.Set(pos);
         }
     }
 }

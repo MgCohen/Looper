@@ -29,7 +29,8 @@ public class Aim : MonoBehaviour
     public void DumpTarget()
     {
         //dump animation
-        Destroy(gameObject);
+        Lean.Pool.LeanPool.Despawn(gameObject);
+        //Destroy(gameObject);
     }
 
     private void Update()

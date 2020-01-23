@@ -10,13 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07135dbbe22157645832acdf93110cb3, type: 3}
-  m_Name: Tap
+  m_Name: TapTarget
   m_EditorClassIdentifier: 
   type: 1
-  OnDo:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEnd:
-    m_PersistentCalls:
-      m_Calls: []
   targetRange: 1

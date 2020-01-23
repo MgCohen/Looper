@@ -21,12 +21,11 @@ public class ChaseTarget : PlayerMod
     {
         foreach(var g in Player.instance.guns)
         {
+            if (g.target == null) continue;
             var t = (g.target as MonoBehaviour).transform;
             var dist = t.position - Player.instance.transform.position;
-            Debug.Log(dist);
             if(dist.magnitude > g.gun.maxRange)
             {
-                Debug.Log(1);
                 Chase(dist.normalized);
             }
         }

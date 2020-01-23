@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum CommandType { Movement, Targetting, Attacking, Bullet, Other}
+public enum CommandType { Movement, Targetting, Attacking, Bullet, Other }
 public class Command : ScriptableObject
 {
     public CommandType type;
@@ -14,6 +14,10 @@ public class Command : ScriptableObject
 
     }
     public virtual void Hold(Vector2 point, float time)
+    {
+
+    }
+    public virtual void Set(Vector2 point)
     {
 
     }

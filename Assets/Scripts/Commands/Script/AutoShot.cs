@@ -19,7 +19,7 @@ public class AutoShot : AttackCommand
     {
         foreach(var g in Player.instance.guns)
         {
-            g.Shot();
+            g.TryShot();
         }
     }
 }
